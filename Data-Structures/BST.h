@@ -16,10 +16,6 @@ class BinarySearchTree {
     BinarySearchTree() {
         head = nullptr;
     }
-
-    // --------------------------------------------------------------------------------------
-
-    // Inserting items to BST with given value
     
     node* create_node(int value) {
         node* temp = new node;
@@ -56,10 +52,6 @@ class BinarySearchTree {
             add_single_item(head,value);
         }
     }
-    
-    // -----------------------------------------------------------------------------------
-
-    // searching for an item with given value
 
     private:
     node* search_item(node* top, int value) {
@@ -101,10 +93,6 @@ class BinarySearchTree {
         }
         else return nodes;
     }
-
-    // -----------------------------------------------------------------------------------------
-
-    // deleting all items from BST with the given value
 
     private:
     void swap_nodes(node* parentA, node* childA, node* parentB, node* childB) {
@@ -247,10 +235,6 @@ class BinarySearchTree {
         }
     }
 
-    // ------------------------------------------------------------------------------------------
-
-    // tree traversals
-
     private:
     void in_order_traversal (node* top) {
         if (top != nullptr) {
@@ -304,23 +288,4 @@ class BinarySearchTree {
         cout << endl;
     }
 
-    //-------------------------------------------------------------------------------------------
 };
-
-int main(){
-
-    BinarySearchTree binarySearchTree = BinarySearchTree();
-    binarySearchTree.add_item(20);
-    binarySearchTree.add_item(11);
-    binarySearchTree.add_item(32);
-    binarySearchTree.add_item(42);
-    binarySearchTree.add_item(32);
-    binarySearchTree.add_item(32);
-    binarySearchTree.traverse("pre-order");
-    binarySearchTree.traverse("post-order");
-    binarySearchTree.traverse("in-order");
-    cout << binarySearchTree.get_first_item(32)->data << endl;
-    binarySearchTree.delete_item(32);
-    binarySearchTree.traverse("in-order");
-    return 0;
-}
