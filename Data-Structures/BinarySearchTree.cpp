@@ -7,7 +7,7 @@ struct node {
     int data;
 };
 
-class BinaryTree {
+class BinarySearchTree {
     
 }
 
