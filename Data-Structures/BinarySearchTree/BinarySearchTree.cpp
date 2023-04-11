@@ -13,6 +13,7 @@ class BinarySearchTree {
     node* head;
     
     public:
+    // constructor
     BinarySearchTree() {
         head = nullptr;
     }
@@ -22,6 +23,7 @@ class BinarySearchTree {
     // Inserting items to BST with given value
     
     node* create_node(int value) {
+        // creates a new node with given value
         node* temp = new node;
         temp->data = value;
         temp->left = nullptr;
@@ -31,6 +33,7 @@ class BinarySearchTree {
 
     private:
     void add_single_item(node* top, int value) {
+        // adds a new item to the tree
         if (value <= top->data) {
             if (top->left == nullptr) {
                 top->left = create_node(value);
@@ -49,6 +52,7 @@ class BinarySearchTree {
 
     public:
     void add_item(int value) {
+        // adds a new item to the tree (including head)
         if (head == nullptr) {
             head = create_node(value);
         }
@@ -63,6 +67,7 @@ class BinarySearchTree {
 
     private:
     node* search_item(node* top, int value) {
+        // searches for an item with given value, starting from top
         if (value < top->data) {
             if (top->left == nullptr) return nullptr;
             return search_item(top->left, value);
@@ -78,6 +83,7 @@ class BinarySearchTree {
 
     public:
     node* get_first_item(int value) {
+        // searches for first item with given value, starting from head
         if (head==nullptr) {
             return nullptr;
         }
@@ -85,6 +91,7 @@ class BinarySearchTree {
     }
 
     vector<node*> get_all_items(int value) {
+        // searches for all items with given value, starting from head
         cout << "--------";
         vector<node*> nodes;
         
@@ -108,6 +115,7 @@ class BinarySearchTree {
 
     private:
     void swap_nodes(node* parentA, node* childA, node* parentB, node* childB) {
+        // swaps positions of two nodes childA and childB in the tree
         if ((parentA->left==childA) && (parentB->left==childB)) {
             parentA->left = childB;
             parentB->left = childA;
@@ -134,6 +142,7 @@ class BinarySearchTree {
 
     private:
     node* minimum_node(node* top) {
+        // searches for item with minimum value, starting from top
         while (top->left != nullptr) {
             top = top-> left;
         }
@@ -142,6 +151,7 @@ class BinarySearchTree {
 
     private:
     node* search_with_parent(node* top, int value, node* parent) {
+        // searches for parent of item with given value, starting from top
         if (value < top->data) {
             if (top->left == nullptr) return nullptr;
             return search_with_parent(top->left, value, top);
@@ -157,28 +167,32 @@ class BinarySearchTree {
 
     private:
     int delete_single_item(node* top, int value) {
+        // deletes an item with given value from the tree
         if (top != nullptr) {
-            node* tempParentA = search_with_parent(top, value, nullptr);
-            node* tempChildA = search_item(top, value);
+            node* tempParentA = search_with_parent(top, value, nullptr); // searches for item with value, starting from top
+            node* tempChildA = search_item(top, value); // searches for parent of item, starting from top
             if (tempParentA == nullptr) {
                 if (tempChildA == nullptr) {
-                    // not found case
+                    // value is not in the tree case
                     return 0;
                 }
                 else {
                     // head == value case
                     if ((head->left == nullptr) && (head->right == nullptr)) {
+                        // head is the only item in tree case
                         head =  nullptr;
                         return 1;
                     }
                     if (head->right == nullptr) {
+                        // only right branch of head is empty case
                         head =  head->left;
                         return 1;
                     }
-                    node* minNode = minimum_node(tempChildA->right);
+                    node* minNode = minimum_node(tempChildA->right);  // searches for item with minimum value, starting from childA.right
                     node* tempParentB = search_with_parent(tempChildA->right, minNode->data, tempChildA);
                     node* tempChildB = minNode;
                     if (tempChildA == tempParentB) {
+                        // right branch has only one item case
                         tempChildB->left = tempChildA->left;
                         head = tempChildB;
                         return 1;
@@ -193,6 +207,7 @@ class BinarySearchTree {
             }
             else {
                 if ((tempChildA->left == nullptr) && (tempChildA->right == nullptr)) {
+                    // item with the value is a leaf case
                     
                     if (tempParentA->left == tempChildA) {
                         tempParentA->left = nullptr;
@@ -204,6 +219,7 @@ class BinarySearchTree {
                     }
                 }
                 if (tempChildA->right == nullptr) {
+                    // right branch of item with value, is empty case
                     if (tempParentA->left == tempChildA) {
                         tempParentA->left = tempChildA->left;
                         return 1;
@@ -217,6 +233,7 @@ class BinarySearchTree {
                 node* tempParentB = search_with_parent(tempChildA->right, minNode->data, tempChildA);
                 node* tempChildB = minNode;
                 if (tempChildA == tempParentB) {
+                    // right branch of item has only one item case
                     if (tempParentA->left == tempChildA) {
                         tempParentA->left = tempChildB;
                     } else {
@@ -225,7 +242,7 @@ class BinarySearchTree {
                     tempChildB->left = tempChildA->left;
                     return 1;
                 }
-                swap_nodes(tempParentA, tempChildA, tempParentB, tempChildB);
+                swap_nodes(tempParentA, tempChildA, tempParentB, tempChildB);   // positions of childA and childB within the tree, are swapped
                 if (tempParentB->left == tempChildA) {
                     tempParentB->left = nullptr;
                 } else {
@@ -242,6 +259,7 @@ class BinarySearchTree {
 
     public:
     void delete_item(int value) {
+        // deletes all items with given value from the tree
         int state = 1;
         while (state) {
             state = delete_single_item(head,value);
@@ -309,7 +327,7 @@ class BinarySearchTree {
 };
 
 int main(){
-
+    
     BinarySearchTree binarySearchTree = BinarySearchTree();
     binarySearchTree.add_item(10);
     binarySearchTree.add_item(5);
