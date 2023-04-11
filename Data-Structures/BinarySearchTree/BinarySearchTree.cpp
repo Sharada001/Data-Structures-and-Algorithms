@@ -184,9 +184,10 @@ class BinarySearchTree {
                         return 1;
                     }
                     head = tempChildB;
+                    tempParentB->left = tempChildB->right;
                     head->left = tempChildA->left;
                     head->right = tempChildA->right;
-                    tempParentB->left = nullptr;
+                    
                     return 1;
                 }
             }
@@ -310,17 +311,14 @@ class BinarySearchTree {
 int main(){
 
     BinarySearchTree binarySearchTree = BinarySearchTree();
-    binarySearchTree.add_item(20);
-    binarySearchTree.add_item(11);
-    binarySearchTree.add_item(32);
-    binarySearchTree.add_item(42);
-    binarySearchTree.add_item(32);
-    binarySearchTree.add_item(32);
-    binarySearchTree.traverse("pre-order");
-    binarySearchTree.traverse("post-order");
-    binarySearchTree.traverse("in-order");
-    cout << binarySearchTree.get_first_item(32)->data << endl;
-    binarySearchTree.delete_item(32);
+    binarySearchTree.add_item(10);
+    binarySearchTree.add_item(5);
+    binarySearchTree.add_item(15);
+    binarySearchTree.add_item(12);
+    binarySearchTree.add_item(17);
+    binarySearchTree.add_item(13);
+    // cout << binarySearchTree.get_first_item(32)->data << endl;
+    binarySearchTree.delete_item(10);
     binarySearchTree.traverse("in-order");
     return 0;
 }

@@ -10,5 +10,5 @@ int main() {
     binarySearchTree.traverse("pre-order");
     // all items have been added right to the root node.
     // which causes inefficiency in this unbalaneced BST implementation.
-    return 0;
+    
 }
