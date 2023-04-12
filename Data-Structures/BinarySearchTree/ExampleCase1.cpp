@@ -1,4 +1,4 @@
-#include "BST.h"
+#include "BinarySearchTree.h"
 #include <vector>
 
 int main() {
