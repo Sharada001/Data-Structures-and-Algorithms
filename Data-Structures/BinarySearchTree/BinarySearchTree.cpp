@@ -266,6 +266,21 @@ class BinarySearchTree {
         }
     }
 
+    private:
+    node* delete_single_item_recursive(node* top, int value) {
+        
+    }
+
+    public:
+    void delete_item_recursive(int value) {
+        // deletes all items with given value from the tree
+        node* state = nullptr;
+        while (state) {
+            state = delete_single_item_recursive(head,value);
+        }
+    }
+
+
     // ------------------------------------------------------------------------------------------
 
     // tree traversals
