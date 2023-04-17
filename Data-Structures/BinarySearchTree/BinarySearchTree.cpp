@@ -254,7 +254,6 @@ class BinarySearchTree {
         else {
             return 0;
         }
-
     }
 
     public:
@@ -266,6 +265,9 @@ class BinarySearchTree {
         }
     }
 
+    // ----------------------------------------------------------------------------------
+    // recursive delete implementation
+
     private:
     node* delete_single_item_recursive(node* top, int value) {
         if (top==nullptr) return nullptr;
@@ -276,7 +278,11 @@ class BinarySearchTree {
             top->right = delete_single_item_recursive(top->right, value);
         }
         else {
-            if (top->left == nullptr) {
+            if (top->left == nullptr && top->right == nullptr) {
+                delete top;
+                return nullptr;
+            }
+            else if (top->left == nullptr) {
                 node* temp = top->right;
                 delete top;
                 return temp;
@@ -286,18 +292,22 @@ class BinarySearchTree {
                 delete top;
                 return temp;
             }
-            node* temp = minimum_node(top->right);
-            top->data = temp->data;
-            top->right = delete_single_item_recursive(top->right, temp->data);
+            else {
+                node* temp = minimum_node(top->right);
+                top->data = temp->data;
+                top->right = delete_single_item_recursive(top->right, temp->data);
+            }
         }
+        return top;
     }
 
     public:
     void delete_item_recursive(int value) {
         // deletes all items with given value from the tree
-        node* state = nullptr;
-        while (state) {
-            state = delete_single_item_recursive(head,value);
+        node* available = search_item(head, value);
+        while (available!=nullptr) {
+            head = delete_single_item_recursive(head,value);
+            available = search_item(head, value);
         }
     }
 
@@ -371,8 +381,13 @@ int main(){
     binarySearchTree.add_item(12);
     binarySearchTree.add_item(17);
     binarySearchTree.add_item(13);
+    binarySearchTree.add_item(18);
+    binarySearchTree.add_item(11);
     // cout << binarySearchTree.get_first_item(32)->data << endl;
-    binarySearchTree.delete_item(10);
+    binarySearchTree.delete_item_recursive(10);
+    binarySearchTree.delete_item_recursive(15);
+    binarySearchTree.delete_item_recursive(13);
+    binarySearchTree.delete_item_recursive(11);
     binarySearchTree.traverse("in-order");
     return 0;
 }

@@ -236,6 +236,49 @@ class BinarySearchTree {
     }
 
     private:
+    node* delete_single_item_recursive(node* top, int value) {
+        if (top==nullptr) return nullptr;
+        else if (value < top->data) {
+            top->left = delete_single_item_recursive(top->left, value);
+        }
+        else if (value > top->data) {
+            top->right = delete_single_item_recursive(top->right, value);
+        }
+        else {
+            if (top->left == nullptr && top->right == nullptr) {
+                delete top;
+                return nullptr;
+            }
+            else if (top->left == nullptr) {
+                node* temp = top->right;
+                delete top;
+                return temp;
+            }
+            else if (top->right == nullptr) {
+                node* temp = top->left;
+                delete top;
+                return temp;
+            }
+            else {
+                node* temp = minimum_node(top->right);
+                top->data = temp->data;
+                top->right = delete_single_item_recursive(top->right, temp->data);
+            }
+        }
+        return top;
+    }
+
+    public:
+    void delete_item_recursive(int value) {
+        // deletes all items with given value from the tree
+        node* available = search_item(head, value);
+        while (available!=nullptr) {
+            head = delete_single_item_recursive(head,value);
+            available = search_item(head, value);
+        }
+    }
+
+    private:
     void in_order_traversal (node* top) {
         if (top != nullptr) {
             if (top->left != nullptr) {
